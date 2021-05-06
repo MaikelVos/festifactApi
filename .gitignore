@@ -426,5 +426,4 @@ __pycache__/
 
 
 # End of https://www.gitignore.io/api/node,visualstudio,webstorm+iml,visualstudiocode
-
-routes/addiction \(1\)\.js
+config.json

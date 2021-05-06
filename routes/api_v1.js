@@ -5,31 +5,31 @@ const Errors = require('../models/Errors');
 const db = require('../db/databaseConnector');
 
 //Routing files
-const goals = require('./goals');
-const risks = require('./risks');
-const difficult_moment = require('./difficult_moments');
-const addiction = require('./addiction');
+// const goals = require('./goals');
+// const risks = require('./risks');
+// const difficult_moment = require('./difficult_moments');
+// const addiction = require('./addiction');
 const global = require('../globalFunctions');
-const usage = require('./usage');
-const usageData = require('./usageData');
-const mood = require('./mood');
-const substance = require('./substance');
-const phone = require('./phonenumbers');
-const note = require('./note');
-const messages = require('./messages');
+// const usage = require('./usage');
+// const usageData = require('./usageData');
+// const mood = require('./mood');
+// const substance = require('./substance');
+// const phone = require('./phonenumbers');
+// const note = require('./note');
+// const messages = require('./messages');
 
 //Routers for goals and risks and difficult moments
-router.use('/goal', goals);
-router.use('/risk', risks);
-router.use('/addiction', addiction);
-router.use('/difficult_moment', difficult_moment);
-router.use('/usage', usage);
-router.use('/usage/client/data', usageData);
-router.use('/mood', mood);
-router.use('/substance', substance);
-router.use('/phone', phone);
-router.use('/note', note);
-router.use('/messages', messages);
+// router.use('/goal', goals);
+// router.use('/risk', risks);
+// router.use('/addiction', addiction);
+// router.use('/difficult_moment', difficult_moment);
+// router.use('/usage', usage);
+// router.use('/usage/client/data', usageData);
+// router.use('/mood', mood);
+// router.use('/substance', substance);
+// router.use('/phone', phone);
+// router.use('/note', note);
+// router.use('/messages', messages);
 
 /*
  * Role routes
