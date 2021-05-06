@@ -1,0 +1,11 @@
+{
+    "secretKey": "?@$msMCvc^DW+E#e2?prZXe9?QTPuTW&ZK?W*B_X3%8TtVsaMn",
+    "port": 3000,
+    "database": {
+        "port": "3306",
+        "host": "159.65.202.227",
+        "username": "mdoduser",
+        "password": "mdod0002",
+        "schema": "mdod"
+    }
+}

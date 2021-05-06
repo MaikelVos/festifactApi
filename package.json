@@ -1,0 +1,41 @@
+{
+  "name": "mdodapi",
+  "version": "1.0.0",
+  "description": "The API for for the (web)app 'Minder Drank Of Drugs'",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test_default": "echo \"Error: no test specified\" && exit 1",
+    "test": "./node_modules/.bin/mocha --reporter spec",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NiekFlipse97/MDODAPI.git"
+  },
+  "author": "Stijn van Veen, Yannick Willems, Niek Flipse",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NiekFlipse97/MDODAPI/issues"
+  },
+  "homepage": "https://github.com/NiekFlipse97/MDODAPI#readme",
+  "dependencies": {
+    "@types/express": "^4.16.0",
+    "bcrypt": "^2.0.1",
+    "body-parser": "^1.18.3",
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
+    "emoji-strip": "^1.0.1",
+    "express": "^4.16.3",
+    "express-jwt": "^5.3.1",
+    "isemail": "^3.1.2",
+    "jwt-simple": "^0.5.1",
+    "mocha": "^5.2.0",
+    "moment": "^2.22.1",
+    "mysql": "^2.15.0",
+    "ssh2": "^0.6.1",
+    "tunnel-ssh": "^4.1.4"
+  }
+}
