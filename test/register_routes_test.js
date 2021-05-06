@@ -10,7 +10,7 @@ chai.use(chaiHttp);
 // for usage in other testcases that require login.
 
 function deletePsychologist() {
-    db.query('DELETE FROM mdod.Psychologist WHERE email = "stijn@gmail.com"'), function (err) {
+    db.query('DELETE FROM ni1783395_1sql1.Psychologist WHERE email = "stijn@gmail.com"'), function (err) {
         if (err) {
             console.log(err);
         }
@@ -18,7 +18,7 @@ function deletePsychologist() {
 }
 
 function deleteClient() {
-    db.query('DELETE FROM mdod.Client WHERE email = "sjaak@gmail.com"'), function (err) {
+    db.query('DELETE FROM ni1783395_1sql1.User WHERE email = "sjaak@gmail.com"'), function (err) {
         if (err) {
             console.log(err);
         }

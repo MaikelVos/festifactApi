@@ -4,7 +4,7 @@ const auth = require('../auth/authentication');
 const db = require('../db/databaseConnector');
 const Errors = require('../models/Errors');
 const Psychologist = require('../models/Psych');
-const Client = require('../models/Client');
+const User = require('../models/Client');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const global = require('../globalFunctions');
@@ -17,7 +17,7 @@ router.post("/login/:role", (req, res) => {
     // If the requested user is a psychologist.
     if (role === 'psychologist') {
         // Checks if the provided email exists in the database.
-        db.query("SELECT email, password FROM mdod.Psychologist WHERE email = ?", [email], function (err, rows, fields) {
+        db.query("SELECT email, password FROM ni1783395_1sql1.Psychologist WHERE email = ?", [email], function (err, rows, fields) {
             if (err) {
                 res.status(500).json(err);
                 return;
@@ -54,7 +54,7 @@ router.post("/login/:role", (req, res) => {
     else if (role === 'client') {
 
         // Checks if the provided email exists in the database.
-        db.query("SELECT email, password FROM mdod.Client WHERE email = ?", [email], function (err, rows, fields) {
+        db.query("SELECT email, password FROM ni1783395_1sql1.User WHERE email = ?", [email], function (err, rows, fields) {
             if (err) {
                 res.status(500).json(err);
                 return;
@@ -117,7 +117,7 @@ router.post("/register/:role", (req, res) => {
                 bcrypt.hash(password, salt, function (err, hash) {
 
                     // Check if the email address already exists in the database.
-                    db.query("SELECT email FROM mdod.Psychologist WHERE email = ?", [email], (error, rows, fields) => {
+                    db.query("SELECT email FROM ni1783395_1sql1.Psychologist WHERE email = ?", [email], (error, rows, fields) => {
                         if (error) {
                             const err = Errors.unknownError();
                             res.status(err.code).json(err);
@@ -132,7 +132,7 @@ router.post("/register/:role", (req, res) => {
                         }
 
                         // If the email doesn't exists in the database, insert it.
-                        db.query("INSERT INTO mdod.Psychologist VALUES(?, ?, ?, ?, ?, ?, ?)", [email, hash, phonenumber, location, firstname, infix, lastname], (error, result) => {
+                        db.query("INSERT INTO ni1783395_1sql1.Psychologist VALUES(?, ?, ?, ?, ?, ?, ?)", [email, hash, phonenumber, location, firstname, infix, lastname], (error, result) => {
                             if (error) {
                                 const err = Errors.conflict();
                                 res.status(err.code).json(error)
@@ -158,8 +158,8 @@ router.post("/register/:role", (req, res) => {
         const address = req.body.adress || "";
         const zipCode = req.body.zipcode || "";
 
-        // Create a new Client. If the validation fails, the client becomes an error message.
-        const client = new Client(email, password, firstname, infix, lastname, phonenumber, dob, city, address, zipCode);
+        // Create a new User. If the validation fails, the client becomes an error message.
+        const client = new User(email, password, firstname, infix, lastname, phonenumber, dob, city, address, zipCode);
 
         // If the client is a real client, and not the error message.
         if (client._email) {
@@ -170,7 +170,7 @@ router.post("/register/:role", (req, res) => {
                 bcrypt.hash(password, salt, function (err, hash) {
 
                     // Check if user already exists
-                    db.query("SELECT email FROM mdod.Client WHERE email = ?", [email], (error, rows, fields) => {
+                    db.query("SELECT email FROM ni1783395_1sql1.User WHERE email = ?", [email], (error, rows, fields) => {
                         if (error) {
                             const err = Errors.unknownError();
                             res.status(err.code).json(err);
@@ -185,7 +185,7 @@ router.post("/register/:role", (req, res) => {
                         }
 
                         // If the user doesn't exist. Insert it.
-                        db.query("INSERT INTO mdod.Client VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [client._email, null, hash, client._phonenumber, client._dob, client._city, client._address, client._zipCode, client._firstname, client._infix, client._lastname], (error, result) => {
+                        db.query("INSERT INTO ni1783395_1sql1.User VALUES(?, ?,  ?, ?, ?, ?, ?, ?, ?, ?)", [client._email,  hash, client._phonenumber, client._dob, client._city, client._address, client._zipCode, client._firstname, client._infix, client._lastname], (error, result) => {
                             if (error) {
                                 const err = Errors.conflict();
                                 res.status(err.code).json(error);
@@ -193,7 +193,7 @@ router.post("/register/:role", (req, res) => {
                             }
 
                             res.status(201).json({
-                                message: "Client aangemaakt"
+                                message: "User aangemaakt"
                             })
                         })
                     });
@@ -221,7 +221,7 @@ router.get('/:role', (req, res) => {
                 res.status(error.code).json(error);
             } else {
                 const email = payload.sub;
-                db.query("SELECT email, contact, firstname, infix, lastname, phonenumber, birthday, city, adress, zipcode FROM mdod.Client WHERE email = ?;", [email], (error, rows, field) => {
+                db.query("SELECT email, contact, firstname, infix, lastname, phonenumber, birthday, city, adress, zipcode FROM ni1783395_1sql1.User WHERE email = ?;", [email], (error, rows, field) => {
                     if (error) {
                         const err = Errors.unknownError();
                         res.status(err.code).json(err);
@@ -246,7 +246,7 @@ router.get('/:role', (req, res) => {
                 res.status(error.code).json(error);
             } else {
                 const email = payload.sub;
-                db.query("SELECT email, firstname, infix, lastname, phonenumber, job_location FROM mdod.Psychologist WHERE email = ?;", [email], (error, rows, field) => {
+                db.query("SELECT email, firstname, infix, lastname, phonenumber, job_location FROM ni1783395_1sql1.Psychologist WHERE email = ?;", [email], (error, rows, field) => {
                     if (error) {
                         const err = Errors.unknownError();
                         console.log(error);
@@ -290,15 +290,15 @@ router.put("/:role", (req, res) => {
                 res.status(error.code).json(error);
             } else {
                 const email = payload.sub;
-                const client = new Client(email, password, firstname, infix, lastname, phonenumber, dob, city, address, zipCode);
+                const client = new User(email, password, firstname, infix, lastname, phonenumber, dob, city, address, zipCode);
                 if (client._email) {
-                    db.query("UPDATE mdod.Client SET phonenumber = ?, birthday = ?, city = ?, adress = ?, zipcode =?, firstname = ?, infix =?, lastname = ? WHERE email = ? ", [phonenumber, dob, city, address, zipCode, firstname, infix, lastname, email], (error, result) => {
+                    db.query("UPDATE ni1783395_1sql1.User SET phonenumber = ?, birthday = ?, city = ?, adress = ?, zipcode =?, firstname = ?, infix =?, lastname = ? WHERE email = ? ", [phonenumber, dob, city, address, zipCode, firstname, infix, lastname, email], (error, result) => {
                         if (error) {
                             const err = Errors.conflict();
                             res.status(err.code).json(err);
                             return;
                         }
-                        res.status(202).json({message: "Client Aangepast"})
+                        res.status(202).json({message: "User Aangepast"})
                     });
                 } else {
                     // If the user object contains the error message.
@@ -324,7 +324,7 @@ router.put("/:role", (req, res) => {
                 const email = payload.sub;
                 const psychologist = new Psychologist(email, password, firstname, infix, lastname, location, phonenumber);
                 if (psychologist._email) {
-                    db.query("UPDATE mdod.Psychologist SET phonenumber = ?, job_location = ?, firstname = ?, infix =?, lastname = ? WHERE email = ? ", [phonenumber, location, firstname, infix, lastname, email], (error, result) => {
+                    db.query("UPDATE ni1783395_1sql1.Psychologist SET phonenumber = ?, job_location = ?, firstname = ?, infix =?, lastname = ? WHERE email = ? ", [phonenumber, location, firstname, infix, lastname, email], (error, result) => {
                         if (error) {
                             const err = Errors.conflict();
                             res.status(err.code).json(err);
@@ -355,7 +355,7 @@ router.delete("/:role", (req, res) => {
             res.status(error.code).json(error);
         } else {
             if (role === 'client') {
-                db.query("DELETE FROM mdod.Client WHERE email = ?;", [email], (error, result) => {
+                db.query("DELETE FROM ni1783395_1sql1.User WHERE email = ?;", [email], (error, result) => {
                     if (error) {
                         const err = Errors.conflict();
                         res.status(err.code).json(err);
@@ -365,7 +365,7 @@ router.delete("/:role", (req, res) => {
                 });
             }
             else if (role === 'psychologist') {
-                db.query("DELETE FROM mdod.Psychologist WHERE email = ?;", [email], (error, result) => {
+                db.query("DELETE FROM ni1783395_1sql1.Psychologist WHERE email = ?;", [email], (error, result) => {
                     if (error) {
                         const err = Errors.conflict();
                         res.status(err.code).json(err);

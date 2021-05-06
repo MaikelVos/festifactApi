@@ -18,7 +18,7 @@ function stripBearerToken(bearerToken) {
  */
 function checkIfEmailIsPsychologistEmail(email, cb) {
     // Select the psychologist email from the database.
-    db.query("SELECT email FROM mdod.Psychologist WHERE email = ?;", [email], (error, rows, fields) => {
+    db.query("SELECT email FROM ni1783395_1sql1.Psychologist WHERE email = ?;", [email], (error, rows, fields) => {
         // If there is a database error.
         if (error) {
             cb(Errors.conflict(), null);
@@ -38,7 +38,7 @@ function checkIfEmailIsPsychologistEmail(email, cb) {
  * @param cb Callback method (error, clientRows).
  */
 function checkIfEmailIsClientEmail(email, cb) {
-    db.query("SELECT email FROM mdod.Client WHERE email = ?;", [email], (error, rows, fields) => {
+    db.query("SELECT email FROM ni1783395_1sql1.User WHERE email = ?;", [email], (error, rows, fields) => {
         // If there is a database error.
         if (error) {
             cb(Errors.conflict(), null);
