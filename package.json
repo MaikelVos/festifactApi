@@ -1,7 +1,7 @@
 {
-  "name": "mdodapi",
+  "name": "festifactapi",
   "version": "1.0.0",
-  "description": "The API for for the (web)app 'Minder Drank Of Drugs'",
+  "description": "The API for the Festifact Xamarin app",
   "main": "index.js",
   "directories": {
     "test": "tests"
@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/NiekFlipse97/MDODAPI.git"
+    "url": "git+https://github.com/MaikelVos/festifactApi.git"
   },
-  "author": "Stijn van Veen, Yannick Willems, Niek Flipse",
+  "author": "Maikel Vos",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/NiekFlipse97/MDODAPI/issues"
+    "url": "https://github.com/MaikelVos/festifactApi/issues"
   },
-  "homepage": "https://github.com/NiekFlipse97/MDODAPI#readme",
+  "homepage": "https://github.com/MaikelVos/festifactApi#readme",
   "dependencies": {
     "@types/express": "^4.17.11",
     "bcrypt": "^5.0.1",
