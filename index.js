@@ -25,10 +25,12 @@ app.use(function (req, res, next) {
     next();
 });
 
+
 // Require authentication for every request,
 // unless the path is specified below.
+const secretKey = process.env.SECRET || config.secretKey;
 app.use(expressJWT({
-    secret: config.secretKey
+    secret: secretKey
 }).unless({
     path: ['/api/login/psychologist', '/api/login/client', '/api/register/client', '/api/register/psychologist']
 }), function (error, req, res, next) {
