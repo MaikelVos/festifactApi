@@ -1,3 +1,4 @@
+{    
     "secretKey": "",
     "port": ,
     "database": {
@@ -6,3 +7,5 @@
         "username": "",
         "password": "",
         "schema": ""
+    }
+}
