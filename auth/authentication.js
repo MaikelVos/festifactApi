@@ -2,6 +2,7 @@ const config = require('../config');
 const moment = require('moment');
 const jwt = require('jwt-simple');
 const Errors = require('../models/Errors');
+const secretKey = process.env.SECRET || config.secretKey;
 
 /**
  * Create the jwt token.
@@ -15,7 +16,7 @@ function encodeToken(email) {
         iat: moment().unix()
     };
 
-    return jwt.encode(payload, config.secretKey, "HS512", {});
+    return jwt.encode(payload, secretKey, "HS512", {});
 }
 
 /**
@@ -25,7 +26,7 @@ function encodeToken(email) {
  */
 function decodeToken(token, cb) {
     try {
-        const payload = jwt.decode(token, config.secretKey, null, "HS512");
+        const payload = jwt.decode(token, secretKey, null, "HS512");
 
         const now = moment().unix();
 
