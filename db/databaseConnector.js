@@ -19,9 +19,8 @@ const dbConfig = process.env.DB_DATABASE && process.env.DB_USER && process.env.D
 const db = mysql.createConnection({
     host: dbConfig.host,
     user: dbConfig.username,
-    password: dbConfig.password,
-    database: dbConfig.name,
-    insecureAuth : true
+    password: dbConfig.password
+
 });
 
 db.connect((error) => {

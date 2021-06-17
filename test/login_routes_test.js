@@ -15,11 +15,12 @@ describe('Login', function(){
 
 
     it('CLIENT: should return a token when providing valid information', (done) => {
+
         chai.request(index)
             .post('/api/login/client')
             .set('Content-Type', 'application/json')
             .send({
-                "email": "sam@gmail.com",
+                "email": "maikelvos@gmail.com",
                 "password": "qwerty123"
             })
             .end((err, res) => {
@@ -31,22 +32,7 @@ describe('Login', function(){
             });
     });
 
-    it('PSYCHOLOGIST: should return a token when providing valid information', (done) => {
-        chai.request(index)
-            .post('/api/login/psychologist')
-            .set('Content-Type', 'application/json')
-            .send({
-                "email": "stijn@gmail.com",
-                "password": "qwerty123"
-            })
-            .end((err, res) => {
-                res.should.have.status(200);
-                const response = res.body;
-                response.should.have.property('token');
-                res.body.should.be.a('object');
-                done();
-            });
-    });
+
 
     it('CLIENT: should throw an error when email does not exist', (done) => {
         chai.request(index)
@@ -63,27 +49,14 @@ describe('Login', function(){
             });
     });
 
-    it('PSYCHOLOGIST: should throw an error when email does not exist', (done) => {
-        chai.request(index)
-            .post('/api/login/psychologist')
-            .set('Content-Type', 'application/json')
-            .send({
-                "email": "nietbestaanemail@email.nl",
-                "password": "wachtwoord"
-            })
-            .end((err, res) => {
-                res.should.have.status(404);
-                res.body.should.be.a('object');
-                done();
-            });
-    });
+
 
     it('CLIENT: should throw an error when email exists but password is invalid', (done) => {
         chai.request(index)
             .post('/api/login')
             .set('Content-Type', 'application/json')
             .send({
-                "email": "sam@gmail.com",
+                "email": "maikel@gmail.com",
                 "password": "wrongPassword"
             })
             .end((err, res) => {
@@ -93,19 +66,6 @@ describe('Login', function(){
             });
     });
 
-    it('PSYCHOLOGIST: should throw an error when email exists but password is invalid', (done) => {
-        chai.request(index)
-            .post('/api/login')
-            .set('Content-Type', 'application/json')
-            .send({
-                "email": "stijn@gmail.com",
-                "password": "wrongPassword"
-            })
-            .end((err, res) => {
-                res.should.have.status(401);
-                res.body.should.be.a('object');
-                done();
-            });
-    });
+
 
 });

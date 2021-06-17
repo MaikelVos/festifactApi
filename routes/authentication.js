@@ -13,66 +13,29 @@ router.post("/login/:role", (req, res) => {
     let role = req.params.role;
     let email = req.body.email || '';
     let password = req.body.password || '';
-
-    // If the requested user is a psychologist.
-    if (role === 'psychologist') {
-        // Checks if the provided email exists in the database.
-        db.query("SELECT email, password FROM ni1783395_1sql1.Psychologist WHERE email = ?", [email], function (err, rows, fields) {
-            if (err) {
-                res.status(500).json(err);
-                return;
-            }
-            // Checks if the database gave back a valid return, if not, return error not found.
-            if (rows.length < 1) {
-                let error = Errors.notFound();
-                res.status(error.code).json(error);
-                return;
-            }
-            // Compares the provided password with the password in the database.
-            bcrypt.compare(password, rows[0].password, (err, result) => {
-                if (err) {
-                    res.json(err);
-                    return;
-                }
-                // Checks the email as well as an extra check, if correct return a token and HTTP 200. Else return a unauthorized code.
-                if (email === rows[0].email && result) {
-                    let token = auth.encodeToken(email);
-                    res.status(200).json({
-                        "token": token,
-                        "status": 200,
-                        "parameters": res.body
-                    });
-                } else {
-                    let error = Errors.unauthorized();
-                    res.status(error.code).json(error);
-                }
-            });
-
-        })
-    }
     // If the requested user is a client.
-    else if (role === 'client') {
+    if (role === 'client') {
 
         // Checks if the provided email exists in the database.
-        db.query("SELECT email, password FROM ni1783395_1sql1.User WHERE email = ?", [email], function (err, rows, fields) {
+        db.query("SELECT email, password FROM ni1783395_1sql1.User WHERE email = ?", [email], function (err, result, fields) {
             if (err) {
                 res.status(500).json(err);
                 return;
             }
             // Checks if the database gave back a valid return, if not, return error not found.
-            if (rows.length < 1) {
+            if (result.length < 1) {
                 let error = Errors.notFound();
                 res.status(error.code).json(error);
                 return;
             }
 
             // Compares the provided password with the password in the database.
-            bcrypt.compare(password, rows[0].password, (err, result) => {
+            bcrypt.compare(password, result[0].password, (err, resultBcrypt) => {
                 if (err) {
                     res.json(err);
                 }
                 // Checks the email as well as an extra check, if correct return a token and HTTP 200. Else return a unauthorized code.
-                if (email === rows[0].email && result) {
+                if (email === result[0].email && resultBcrypt) {
                     let token = auth.encodeToken(email);
                     res.status(200).json({
                         "token": token,
@@ -93,65 +56,20 @@ router.post("/login/:role", (req, res) => {
 
 router.post("/register/:role", (req, res) => {
     // Define the properties for a user.
+    const {
+        v1: uuidv1,
+    } = require('uuid');
+    const Id = uuidv1();
     const email = req.body.email || "";
     const password = req.body.password || "";
     const firstname = req.body.firstname || "";
     const infix = req.body.infix || "";
     const lastname = req.body.lastname || "";
     const phonenumber = req.body.phonenumber || "";
+    const role = req.body.role || "";
 
-    // If the registered user is a psychologist.
-    if (req.params.role === "psychologist") {
-        // Define the properties for a psychologist.
-        const location = req.body.location || "";
-
-        // Create a new Psychologist. If the validation of this user fails this object contains an error message.
-        const psychologist = new Psychologist(email, password, firstname, infix, lastname, location, phonenumber);
-
-        // Check if the psychologist a valid psychologists is, and not the error message.
-        if (psychologist._email) {
-            // Generate a salt for the hash method.
-            bcrypt.genSalt(saltRounds, function (err, salt) {
-
-                // Hash the plain text password to a bcrypt hash.
-                bcrypt.hash(password, salt, function (err, hash) {
-
-                    // Check if the email address already exists in the database.
-                    db.query("SELECT email FROM ni1783395_1sql1.Psychologist WHERE email = ?", [email], (error, rows, fields) => {
-                        if (error) {
-                            const err = Errors.unknownError();
-                            res.status(err.code).json(err);
-                            return;
-                        }
-
-                        // If the email address exists. return a conflict error.
-                        if (rows.length > 0) {
-                            const error = Errors.userExists();
-                            res.status(error.code).json(error);
-                            return;
-                        }
-
-                        // If the email doesn't exists in the database, insert it.
-                        db.query("INSERT INTO ni1783395_1sql1.Psychologist VALUES(?, ?, ?, ?, ?, ?, ?)", [email, hash, phonenumber, location, firstname, infix, lastname], (error, result) => {
-                            if (error) {
-                                const err = Errors.conflict();
-                                res.status(err.code).json(error)
-                            }
-
-                            res.status(201).json({
-                                message: "Psycholoog aangemaakt"
-                            })
-                        })
-                    });
-                })
-            });
-        } else {
-            // If the psychologist is not a real psychologist but the error method.
-            res.status(psychologist.code).json(psychologist);
-        }
-
-        // If the role is a client.
-    } else if (req.params.role === "client") {
+    // If the role is a client.
+     if (req.params.role === "client") {
         // Define the properties for a client (Sub class).
         const dob = req.body.dob || "";
         const city = req.body.city || "";
@@ -165,12 +83,19 @@ router.post("/register/:role", (req, res) => {
         if (client._email) {
             // Generate salt.
             bcrypt.genSalt(saltRounds, function (err, salt) {
+                if (err) {
 
+                    console.log(err.code);
+                    return;
+                }
                 // Hash password.
                 bcrypt.hash(password, salt, function (err, hash) {
-
+                    if (err) {
+                        console.log(err.code);
+                        return;
+                    }
                     // Check if user already exists
-                    db.query("SELECT email FROM ni1783395_1sql1.User WHERE email = ?", [email], (error, rows, fields) => {
+                    db.query("SELECT email FROM ni1783395_1sql1.User WHERE email = ?", [email], (error, result, fields) => {
                         if (error) {
                             const err = Errors.unknownError();
                             res.status(err.code).json(err);
@@ -178,14 +103,14 @@ router.post("/register/:role", (req, res) => {
                         }
 
                         // If user exists. return conflict error.
-                        if (rows.length > 0) {
+                        if (result.length > 0) {
                             const error = Errors.userExists();
                             res.status(error.code).json(error);
                             return;
                         }
 
                         // If the user doesn't exist. Insert it.
-                        db.query("INSERT INTO ni1783395_1sql1.User VALUES(?, ?,  ?, ?, ?, ?, ?, ?, ?, ?)", [client._email,  hash, client._phonenumber, client._dob, client._city, client._address, client._zipCode, client._firstname, client._infix, client._lastname], (error, result) => {
+                        db.query("INSERT INTO ni1783395_1sql1.User VALUES(?, ?, ?,  ?, ?, ?, ?, ?, ?, ?, ?, ?)", [Id, client._email,  hash, client._phonenumber, client._dob, client._city, client._address, client._zipCode, client._firstname, client._infix, client._lastname, role], (error, result) => {
                             if (error) {
                                 const err = Errors.conflict();
                                 res.status(err.code).json(error);
