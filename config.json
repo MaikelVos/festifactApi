@@ -1,6 +1,6 @@
 {
     "secretKey": "",
-    "port": ,
+    "port": "",
     "database": {
         "port": "",
         "host": "",
