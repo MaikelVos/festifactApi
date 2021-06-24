@@ -17,7 +17,7 @@ router.post("/login/:role", (req, res) => {
     if (role === 'client') {
 
         // Checks if the provided email exists in the database.
-        db.query("SELECT email, password FROM ni1783395_1sql1.User WHERE email = ?", [email], function (err, result, fields) {
+        db.query("SELECT email, password, role FROM ni1783395_1sql1.User WHERE email = ?", [email], function (err, result, fields) {
             if (err) {
                 res.status(500).json(err);
                 return;
@@ -40,7 +40,8 @@ router.post("/login/:role", (req, res) => {
                     res.status(200).json({
                         "token": token,
                         "status": 200,
-                        "parameters": res.body
+                        "parameters": res.body,
+                        "role": result[0].role
                     });
                 } else {
                     let error = Errors.unauthorized();
