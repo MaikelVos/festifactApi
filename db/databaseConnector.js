@@ -14,17 +14,18 @@ const dbConfig = process.env.DB_DATABASE && process.env.DB_USER && process.env.D
 
 /**
  * Create the database connection and store it in this variable.
- * @type {Connection}
+ * @type {Pool}
  */
-const db = mysql.createConnection({
+const db = mysql.createPool({
     host: dbConfig.host,
     user: dbConfig.username,
     password: dbConfig.password
 
 });
+console.log(`Connected to ${dbConfig.host}:${dbConfig.name || config.database.schema}`);
+// db.connect((error) => {
+//     console.log(error ? error : `Connected to ${dbConfig.host}:${dbConfig.name || config.database.schema}`);
+// });
 
-db.connect((error) => {
-    console.log(error ? error : `Connected to ${dbConfig.host}:${dbConfig.name || config.database.schema}`);
-});
 
 module.exports = db;
