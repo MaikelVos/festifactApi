@@ -3,7 +3,7 @@ const router = express.Router({});
 const auth = require('../auth/authentication');
 const Errors = require('../models/Errors');
 const db = require('../db/databaseConnector');
-const Festival = require('../models/Festival');
+//const Festival = require('../models/Festival');
 const global = require('../globalFunctions');
 
 /**
