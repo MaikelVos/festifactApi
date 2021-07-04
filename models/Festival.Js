@@ -2,8 +2,9 @@ const Errors = require('./Errors');
 const global = require('../globalFunctions');
 
 class Festival {
-    constructor(name, description, startDate, endDate, organiser, tickets) {
+    constructor(festivalLocations, name, description, startDate, endDate, organiser, tickets) {
 
+        this._festivalLocations = festivalLocations;
         this._name = global.checkEmoji(name);
         this._description = global.checkEmoji(description);
         this._startdate = startDate;
