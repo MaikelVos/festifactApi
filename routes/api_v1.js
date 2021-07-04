@@ -5,7 +5,7 @@ const Errors = require('../models/Errors');
 const db = require('../db/databaseConnector');
 
 //Routing files
-// const goals = require('./goals');
+const festivals = require('./festivals');
 // const risks = require('./risks');
 // const difficult_moment = require('./difficult_moments');
 // const addiction = require('./addiction');
@@ -19,7 +19,7 @@ const global = require('../globalFunctions');
 // const messages = require('./messages');
 
 //Routers for goals and risks and difficult moments
-// router.use('/goal', goals);
+router.use('/festival', festivals);
 // router.use('/risk', risks);
 // router.use('/addiction', addiction);
 // router.use('/difficult_moment', difficult_moment);
