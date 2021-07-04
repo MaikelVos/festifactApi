@@ -140,7 +140,7 @@ router.get('/:role', (req, res) => {
     const token = global.stripBearerToken(req.header('Authorization'));
     const role = req.params.role;
     if (role === 'client') {
-        const data = auth.decodeToken(token, (err, payload) => {
+         auth.decodeToken(token, (err, payload) => {
             if (err) {
                 console.log('Error handler: ' + err.message);
                 let error = Errors.noValidToken();
@@ -165,7 +165,7 @@ router.get('/:role', (req, res) => {
             }
         });
     } else if (role === 'psychologist') {
-        const data = auth.decodeToken(token, (err, payload) => {
+        auth.decodeToken(token, (err, payload) => {
             if (err) {
                 console.log('Error handler: ' + err.message);
                 let error = Errors.noValidToken();
@@ -209,7 +209,7 @@ router.put("/:role", (req, res) => {
         const address = req.body.adress || "";
         const zipCode = req.body.zipcode || "";
         const token = global.stripBearerToken(req.header('Authorization'));
-        const data = auth.decodeToken(token, (err, payload) => {
+        auth.decodeToken(token, (err, payload) => {
             if (err) {
                 console.log('Error handler: ' + err.message);
                 let error = Errors.noValidToken();
@@ -240,7 +240,7 @@ router.put("/:role", (req, res) => {
         const phonenumber = req.body.phonenumber || "";
         const location = req.body.location;
         const token = global.stripBearerToken(req.header('Authorization'));
-        const data = auth.decodeToken(token, (err, payload) => {
+        auth.decodeToken(token, (err, payload) => {
             if (err) {
                 console.log('Error handler: ' + err.message);
                 let error = Errors.noValidToken();
@@ -273,7 +273,7 @@ router.put("/:role", (req, res) => {
 router.delete("/:role", (req, res) => {
     const role = req.params.role;
     const token = global.stripBearerToken(req.header('Authorization'));
-    const data = auth.decodeToken(token, (err, payload) => {
+    auth.decodeToken(token, (err, payload) => {
         const email = payload.sub;
         if (err) {
             console.log('Error handler: ' + err.message);
