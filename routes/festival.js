@@ -17,20 +17,7 @@ router.get('/all', (req, res) => {
             let error = Errors.noValidToken();
             res.status(error.code).json(error);
         } else {
-            db.query("SELECT (SELECT group_concat(DISTINCT PLACE) as \"Festival location\"\n" +
-                "FROM Locations loc\n" +
-                "INNER JOIN FestivalLocation floc\n" +
-                "ON floc.LocationId = loc.LocationId\n" +
-                "WHERE fe.FestivalId = floc.FestivalId\n" +
-                "       ) as \"Festival location\",\n" +
-                "fe.FestivalId,\n" +
-                "fe.Name,\n" +
-                "fe.Description,\n" +
-                "fe.StartDate,\n" +
-                "fe.EndDate,\n" +
-                "fe.Organiser,\n" +
-                "fe.TicketAmount\n" +
-                "FROM Festival fe WHERE fe.EndDate >= NOW()", (error, rows) => {
+            db.query("SELECT * FROM ni1783395_1sql1.GetFestivals", (error, rows) => {
                 if (error) {
                     const err = Errors.conflict();
                     res.status(err.code).json(err);
