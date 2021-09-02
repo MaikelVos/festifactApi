@@ -74,7 +74,7 @@ router.post("/register/:role", (req, res) => {
         // Define the properties for a client (Sub class).
         const dob = req.body.dob || "";
         const city = req.body.city || "";
-        const address = req.body.adress || "";
+        const address = req.body.address || "";
         const zipCode = req.body.zipcode || "";
 
         // Create a new User. If the validation fails, the client becomes an error message.

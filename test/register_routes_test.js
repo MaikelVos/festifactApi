@@ -45,7 +45,7 @@ describe('Registration', function () {
                 "password": "qwerty123",
                 "phonenumber": "062345678",
                 "city" : "Breda",
-                "adress" : "Beukenlaan 9",
+                "address" : "Beukenlaan 9",
                 "zipcode" : "7676 AS",
                 "role" : "User"
             })
@@ -69,7 +69,7 @@ describe('Registration', function () {
                 "password": "qwerty123",
                 "phonenumber": "062345678",
                 "city" : "Breda",
-                "adress" : "Beukenlaan 9",
+                "address" : "Beukenlaan 9",
                 "zipcode" : "7676 AS",
                 "role" : "Admin"
             })
@@ -95,7 +95,7 @@ describe('Registration', function () {
                 "password": "qwerty123",
                 "phonenumber": "062345678",
                 "city" : "Breda",
-                "adress" : "Zuidsingel 8",
+                "address" : "Zuidsingel 8",
                 "zipcode" : "6969 HB"
             })
             .end((err, res) => {
@@ -120,7 +120,7 @@ describe('Registration', function () {
                 "password": "qwerty123",
                 "phonenumber": "062345678",
                 "city" : "Breda",
-                "adress" : "Zuidsingel 8",
+                "address" : "Zuidsingel 8",
                 "zipcode" : "6969 HB"
             })
             .end((err, res) => {
@@ -146,7 +146,7 @@ describe('Registration', function () {
                 "password": "qwerty123",
                 "phonenumber": "062345678",
                 "city" : "Breda",
-                "adress" : "Zuidsingel 8",
+                "address" : "Zuidsingel 8",
                 "zipcode" : "6969 HB"
             })
             .end((err, res) => {
@@ -172,7 +172,7 @@ describe('Registration', function () {
                 "password": "qwerty123",
                 "phonenumber": "062345678",
                 "city" : "Breda",
-                "adress" : "Zuidsingel 8",
+                "address" : "Zuidsingel 8",
                 "zipcode" : "6969 HB"
             })
             .end((err, res) => {
@@ -198,7 +198,7 @@ describe('Registration', function () {
                 "password": "qwerty123",
                 "phonenumber": "062345678",
                 "city" : "Breda",
-                "adress" : "Zuidsingel 8",
+                "address" : "Zuidsingel 8",
                 "zipcode" : "6969 HB"
             })
             .end((err, res) => {
@@ -224,7 +224,7 @@ describe('Registration', function () {
                 "password": "qwerty123",
                 "phonenumber": "062345678",
                 "city" : "Breda",
-                "adress" : "Zuidsingel 8",
+                "address" : "Zuidsingel 8",
                 "zipcode" : "6969 HB"
             })
             .end((err, res) => {
@@ -251,7 +251,7 @@ describe('Registration', function () {
                 "password": "qwerty123",
                 "phonenumber": "062345678000000000000000000000000000",
                 "city" : "Breda",
-                "adress" : "Zuidsingel 8",
+                "address" : "Zuidsingel 8",
                 "zipcode" : "6969 HB"
             })
             .end((err, res) => {
@@ -279,7 +279,7 @@ describe('Registration', function () {
                 "password": "qwertytfjguhiljktguh@#",
                 "phonenumber": "062345678",
                 "city" : "Breda",
-                "adress" : "Zuidsingel 8",
+                "address" : "Zuidsingel 8",
                 "zipcode" : "6969 HB"
             })
             .end((err, res) => {
@@ -303,7 +303,7 @@ describe('Registration', function () {
                 "password": "qwertyt123",
                 "phonenumber": "062345678",
                 "city" : "123",
-                "adress" : "Zuidsingel 8",
+                "address" : "Zuidsingel 8",
                 "zipcode" : "6969 HB"
             })
             .end((err, res) => {
@@ -327,7 +327,7 @@ describe('Registration', function () {
                 "password": "qwertyt123",
                 "phonenumber": "062345678",
                 "city" : "Breda",
-                "adress" : "123",
+                "address" : "123",
                 "zipcode" : "6969 HB"
             })
             .end((err, res) => {
@@ -351,7 +351,7 @@ describe('Registration', function () {
                 "password": "qwertyt123",
                 "phonenumber": "062345678",
                 "city" : "Breda",
-                "adress" : "zuidsingel 8",
+                "address" : "zuidsingel 8",
                 "zipcode" : "420"
             })
             .end((err, res) => {
