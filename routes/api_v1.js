@@ -54,7 +54,7 @@ router.get('/all/:role', (req, res) => {
                         res.status(error.code).json(error);
                         return;
                     } else {
-                        db.query("SELECT email, firstname, infix, lastname FROM ni1783395_1sql1.User", [email], (error, rows) => {
+                        db.query("SELECT email, firstname, infix, lastname FROM ni1783395_2_DB.User", [email], (error, rows) => {
                             // Query/DB Error.
                             if (error) {
                                 const err = Errors.unknownError();
@@ -103,7 +103,7 @@ router.post('/specific/:role', (req, res) => {
                         res.status(error.code).json(error);
                         return;
                     } else {
-                        db.query("SELECT email, contact, phonenumber, birthday, city, adress, zipcode, firstname, infix, lastname FROM ni1783395_1sql1.User WHERE email = ?;", [client_email], (error, rows) => {
+                        db.query("SELECT email, contact, phonenumber, birthday, city, adress, zipcode, firstname, infix, lastname FROM ni1783395_2_DB.User WHERE email = ?;", [client_email], (error, rows) => {
                             // DB/Query Error.
                             if (error) {
                                 const err = Errors.unknownError();
@@ -160,7 +160,7 @@ router.put('/pickclient', (req, res) => {
                                 email = null;
                             }
                             //Add Psychologist to Client
-                            db.query("UPDATE ni1783395_1sql1.User SET contact = ? WHERE email = ?", [email, client_email], (error, result) => {
+                            db.query("UPDATE ni1783395_2_DB.User SET contact = ? WHERE email = ?", [email, client_email], (error, result) => {
                                 if (error) {
                                     const err = Errors.unknownError();
                                     res.status(err.code).json(err);
@@ -193,7 +193,7 @@ router.get('/clients-by-psychologist', (req, res) => {
                 if (error) {
                     res.status(error.code).json(error);
                 } else {
-                    db.query("SELECT email, firstname, infix, lastname FROM ni1783395_1sql1.User WHERE contact = ?", [email], (error, rows) => {
+                    db.query("SELECT email, firstname, infix, lastname FROM ni1783395_2_DB.User WHERE contact = ?", [email], (error, rows) => {
                         if (error) {
                             console.log(error);
                             const err = Errors.unknownError();

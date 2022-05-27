@@ -4,7 +4,7 @@ const index = require('../index');
 const db = require('../db/databaseConnector');
 
 function insertClient(){
-   db.query("INSERT INTO ni1783395_1sql1.User ")
+   db.query("INSERT INTO ni1783395_2_DB.User ")
 };
 
 chai.should();
