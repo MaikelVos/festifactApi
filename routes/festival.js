@@ -17,7 +17,7 @@ router.get('/all', (req, res) => {
             let error = Errors.noValidToken();
             res.status(error.code).json(error);
         } else {
-            db.query("SELECT * FROM ni1783395_1sql1.GetFestivals", (error, rows) => {
+            db.query("SELECT * FROM ni1783395_2_DB.GetFestivals", (error, rows) => {
                 if (error) {
                     const err = Errors.conflict();
                     res.status(err.code).json(err);

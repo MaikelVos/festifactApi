@@ -11,12 +11,12 @@ chai.use(chaiHttp);
 
 
 function deleteClient() {
-    db.query('DELETE FROM ni1783395_1sql1.User WHERE email = "sjaak@gmail.com"'), function (err) {
+    db.query('DELETE FROM ni1783395_2_DB.User WHERE email = "sjaak@gmail.com"'), function (err) {
         if (err) {
             console.log(err);
         }
     };
-    db.query('DELETE FROM ni1783395_1sql1.User WHERE email = "sjaakAdmin@gmail.com"'), function (err) {
+    db.query('DELETE FROM ni1783395_2_DB.User WHERE email = "sjaakAdmin@gmail.com"'), function (err) {
         if (err) {
             console.log(err);
         }
