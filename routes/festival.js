@@ -3,7 +3,7 @@ const router = express.Router({});
 const auth = require('../auth/authentication');
 const Errors = require('../models/Errors');
 const db = require('../db/databaseConnector');
-const Festival = require('../models/Festival');
+const festival = require('../models/FestivalTemp.Js');
 const global = require('../globalFunctions');
 
 /**
@@ -73,7 +73,7 @@ router.post(`/new`, (req, res) => {
 
                     const organiser = result[0].firstname;
 
-                    const festival = new Festival("", name, description, startDate, endDate, organiser, ticketAmount, ticketAmount);
+                    const festivalNw = new festival("", name, description, startDate, endDate, organiser, ticketAmount, ticketAmount);
 
                     // Check if Festival for user already exists
                     db.query("SELECT * FROM ni1783395_2_DB.GetFestivalsOrganiser WHERE email = ? and name = ?", [email, name], (error, result) => {
@@ -91,7 +91,7 @@ router.post(`/new`, (req, res) => {
                         }
 
                         //If the festival doesn't exist. Insert it.
-                        db.query("INSERT INTO ni1783395_2_DB.Festival VALUES(?, ?, ?, ?, ?, ?, ?, 0)", [Id, festival._name,  festival._description, festival._startdate, festival._enddate, festival._organiser, festival._tickets,], (error, result) => {
+                        db.query("INSERT INTO ni1783395_2_DB.Festival VALUES(?, ?, ?, ?, ?, ?, ?, 0)", [Id, festivalNw._name,  festivalNw._description, festivalNw._startdate, festivalNw._enddate, festivalNw._organiser, festivalNw._tickets,], (error, result) => {
                             if (error) {
                                 const err = Errors.conflict();
                                 res.status(err.code).json(error);
