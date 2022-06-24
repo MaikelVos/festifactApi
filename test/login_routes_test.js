@@ -20,7 +20,7 @@ describe('Login', function(){
             .post('/api/login/client')
             .set('Content-Type', 'application/json')
             .send({
-                "email": "maikelvos@gmail.com",
+                "email": "maikel@gmail.com",
                 "password": "qwerty123"
             })
             .end((err, res) => {
