@@ -1,7 +1,7 @@
 const Errors = require('./Errors');
 const global = require('../globalFunctions');
 
-class Festival {
+class FestivalTemp {
     constructor(festivalLocations, name, description, startDate, endDate, organiser, tickets, RemainingTickets) {
 
         if (!
@@ -27,4 +27,4 @@ class Festival {
     }
 }
 
-module.exports = Festival;
+module.exports = FestivalTemp;
