@@ -5,7 +5,7 @@ const db = require('../db/databaseConnector');
 const Errors = require('../models/Errors');
 const Psychologist = require('../models/Psych');
 const User = require('../models/Client');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const saltRounds = 10;
 const global = require('../globalFunctions');
 
@@ -291,7 +291,7 @@ router.delete("/:role", (req, res) => {
                 });
             }
             else if (role === 'psychologist') {
-                db.query("DELETE FROM ni1783395_2_DB.Psychologist WHERE email = ?;", [email], (error, result) => {
+                db.query( "DELETE FROM ni1783395_2_DB.Psychologist WHERE email = ?;", [email], (error, result) => {
                     if (error) {
                         const err = Errors.conflict();
                         res.status(err.code).json(err);

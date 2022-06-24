@@ -59,11 +59,19 @@ function checkEmoji(string) {
     return emojiStrip(string);
 }
 
+/**
+ * This function checks if the string contains a date.
+ *  * @param string date input.
+ */
+function checkDate(string) {
+    return string && /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/.test(string);
+}
 //U+1F60x
 
 module.exports = {
     stripBearerToken,
     checkIfEmailIsPsychologistEmail,
     checkIfEmailIsClientEmail,
-    checkEmoji
+    checkEmoji,
+    checkDate
 };

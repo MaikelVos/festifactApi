@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const config = require('./config');
 const Errors = require('./models/Errors');
 const api = require('./routes/api');
-const expressJWT = require('express-jwt');
+const {expressjwt: jwt} = require('express-jwt');
 const dbc = require('./db/databaseConnector');
 const app = express();
 
@@ -29,7 +29,8 @@ app.use(function (req, res, next) {
 // Require authentication for every request,
 // unless the path is specified below.
 const secretKey = process.env.SECRET || config.secretKey;
-app.use(expressJWT({
+app.use(jwt({
+    algorithms: ['HS512'],
     secret: secretKey
 }).unless({
     path: ['/api/login/psychologist', '/api/login/client', '/api/register/client', '/api/register/psychologist']
