@@ -30,7 +30,7 @@ app.use(function (req, res, next) {
 // unless the path is specified below.
 const secretKey = process.env.SECRET || config.secretKey;
 app.use(jwt({
-    algorithms: ['sha1', 'RS256', 'HS256'],
+    algorithms: ['HS512'],
     secret: secretKey
 }).unless({
     path: ['/api/login/psychologist', '/api/login/client', '/api/register/client', '/api/register/psychologist']

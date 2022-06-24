@@ -91,6 +91,15 @@ class Errors {
     static userExists() {
         return new Error("User Exists", 420);
     }
+
+    /**
+     * Unofficial HTTP Response.
+     * This response is self reclaimed.
+     * @returns {Error} Festival Exists, 421
+     */
+    static festivalExists() {
+        return new Error("Festival Exists", 420);
+    }
 }
 
 module.exports = Errors;

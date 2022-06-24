@@ -34,51 +34,64 @@ router.get('/all', (req, res) => {
  */
 router.post(`/new`, (req, res) => {
     const token = global.stripBearerToken(req.header('Authorization'));
+
     auth.decodeToken(token, (err, payload) => {
+
         const email = payload.sub;
         const {
             v1: uuidv1,
         } = require('uuid');
         const Id = uuidv1();
-        const festivalLocations = req.body.festivalLocations || "";
-        const name = req.body.name || "";
-        const description = req.body.description || "";
-        const startdate = req.body.startdate || "";
-        const enddate = req.body.enddate || "";
-        const organiser = req.body.organiser || "";
-        const tickets = req.body.tickets || "";
+        const name = req.body.Name || "";
+        const description = req.body.Description || "";
+        const startDate = req.body.StartDate || "";
+        const endDate = req.body.EndDate || "";
+        const ticketAmount = req.body.TicketAmount || "";
 
-        const Festival = new Festival();
+
 
         if (err) {
             console.log('Error handler: ' + err.message);
             let error = Errors.noValidToken();
             res.status(error.code).json(error);
-        } else {
+            return;
+        }
+        else {
             //Check for user, if it may make a festival
-            db.query("SELECT * FROM ni1783395_2_DB.GetFestivalsOrganiser where email = '" + email + "'", (error, rows) => {
+            db.query("SELECT * FROM ni1783395_2_DB.User where role = 'Admin' and email = '" + email + "'" , (error, result, rows) => {
                 if (error) {
                     const err = Errors.conflict();
                     res.status(err.code).json(err);
-                } else {
+                }
+                else {
 
-                    // Check if Festival already exists
-                    db.query("SELECT email FROM ni1783395_2_DB.Festival WHERE email = ?", [email], (error, result, fields) => {
+                    if (result.length !== 1) {
+                        const err = Errors.forbidden();
+                        res.status(err.code).json(err);
+                        return;
+                    }
+
+                    const organiser = result[0].firstname;
+
+                    const festival = new Festival("", name, description, startDate, endDate, organiser, ticketAmount, ticketAmount);
+
+                    // Check if Festival for user already exists
+                    db.query("SELECT * FROM ni1783395_2_DB.GetFestivalsOrganiser WHERE email = ? and name = ?", [email, name], (error, result) => {
                         if (error) {
                             const err = Errors.unknownError();
                             res.status(err.code).json(err);
                             return;
                         }
 
-                        // If user exists. return conflict error.
+                        // If festival exists. return conflict error.
                         if (result.length > 0) {
-                            const error = Errors.userExists();
+                            const error = Errors.festivalExists();
                             res.status(error.code).json(error);
                             return;
                         }
 
-                        // If the user doesn't exist. Insert it.
-                        db.query("INSERT INTO ni1783395_2_DB.User VALUES(?, ?, ?,  ?, ?, ?, ?, ?, ?, ?, ?, ?)", [Id, client._email,  hash, client._phonenumber, client._dob, client._city, client._address, client._zipCode, client._firstname, client._infix, client._lastname, role], (error, result) => {
+                        //If the festival doesn't exist. Insert it.
+                        db.query("INSERT INTO ni1783395_2_DB.Festival VALUES(?, ?, ?, ?, ?, ?, ?, 0)", [Id, festival._name,  festival._description, festival._startdate, festival._enddate, festival._organiser, festival._tickets,], (error, result) => {
                             if (error) {
                                 const err = Errors.conflict();
                                 res.status(err.code).json(error);
@@ -86,13 +99,10 @@ router.post(`/new`, (req, res) => {
                             }
 
                             res.status(201).json({
-                                message: "User aangemaakt"
+                                message: "festival aangemaakt"
                             })
                         })
                     });
-
-
-                    res.status(200).json(rows);
                 }
             });
         }
