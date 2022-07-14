@@ -89,7 +89,7 @@ class Errors {
      * @returns {Error} User Exists, 420
      */
     static userExists() {
-        return new Error("User Exists", 420);
+        return new Error("User already Exists", 420);
     }
 
     /**
@@ -98,7 +98,16 @@ class Errors {
      * @returns {Error} Festival Exists, 421
      */
     static festivalExists() {
-        return new Error("Festival Exists", 420);
+        return new Error("Festival already Exists", 420);
+    }
+
+    /**
+     * Unofficial HTTP Response.
+     * This response is self reclaimed.
+     * @returns {Error} Location Exists, 421
+     */
+    static locationExists() {
+        return new Error("Location already Exists", 420);
     }
 }
 

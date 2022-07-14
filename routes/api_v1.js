@@ -6,7 +6,7 @@ const db = require('../db/databaseConnector');
 
 //Routing files
 const festival = require('./festival');
-// const risks = require('./risks');
+const location = require('./location');
 // const difficult_moment = require('./difficult_moments');
 // const addiction = require('./addiction');
 const global = require('../globalFunctions');
@@ -20,7 +20,7 @@ const global = require('../globalFunctions');
 
 //Routers for goals and risks and difficult moments
 router.use('/festival', festival);
-// router.use('/risk', risks);
+ router.use('/location', location);
 // router.use('/addiction', addiction);
 // router.use('/difficult_moment', difficult_moment);
 // router.use('/usage', usage);
@@ -49,10 +49,9 @@ router.get('/all/:role', (req, res) => {
             if (role === 'client') {
                 const email = payload.sub;
 
-                global.checkIfEmailIsPsychologistEmail(email, (error, psychRows) => {
+                global.checkIfEmailIsPsychologistEmail(email, (error) => {
                     if (error) {
                         res.status(error.code).json(error);
-                        return;
                     } else {
                         db.query("SELECT email, firstname, infix, lastname FROM ni1783395_2_DB.User", [email], (error, rows) => {
                             // Query/DB Error.
@@ -98,10 +97,9 @@ router.post('/specific/:role', (req, res) => {
                 const email = payload.sub;
                 const client_email = req.body.email || "";
 
-                global.checkIfEmailIsPsychologistEmail(email, (error, psychRows) => {
+                global.checkIfEmailIsPsychologistEmail(email, (error) => {
                     if (error) {
                         res.status(error.code).json(error);
-                        return;
                     } else {
                         db.query("SELECT email, contact, phonenumber, birthday, city, adress, zipcode, firstname, infix, lastname FROM ni1783395_2_DB.User WHERE email = ?;", [client_email], (error, rows) => {
                             // DB/Query Error.
@@ -146,21 +144,19 @@ router.put('/pickclient', (req, res) => {
             const client_email = req.body.email || "";
             const insert_delete = req.body.insert || "";
 
-            global.checkIfEmailIsPsychologistEmail(email, (error, psychRows) => {
+            global.checkIfEmailIsPsychologistEmail(email, (error) => {
                 if (error) {
                     res.status(error.code).json(error);
-                    return;
                 } else {
-                    global.checkIfEmailIsClientEmail(client_email, (error, clientRow) => {
+                    global.checkIfEmailIsClientEmail(client_email, (error) => {
                         if (error) {
                             res.status(error.code).json(error);
-                            return;
                         } else {
                             if (insert_delete === "0") {
                                 email = null;
                             }
                             //Add Psychologist to Client
-                            db.query("UPDATE ni1783395_2_DB.User SET contact = ? WHERE email = ?", [email, client_email], (error, result) => {
+                            db.query("UPDATE ni1783395_2_DB.User SET contact = ? WHERE email = ?", [email, client_email], (error) => {
                                 if (error) {
                                     const err = Errors.unknownError();
                                     res.status(err.code).json(err);
@@ -189,7 +185,7 @@ router.get('/clients-by-psychologist', (req, res) => {
             // Get Clients by psychologist email.
             const email = payload.sub;
 
-            global.checkIfEmailIsPsychologistEmail(email, (error, psychRows) => {
+            global.checkIfEmailIsPsychologistEmail(email, (error) => {
                 if (error) {
                     res.status(error.code).json(error);
                 } else {

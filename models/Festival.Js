@@ -2,7 +2,7 @@ const Errors = require('./Errors');
 const global = require('../globalFunctions');
 
 class Festival {
-    constructor(festivalLocations, name, description, startDate, endDate, organiser, tickets, RemainingTickets) {
+    constructor(festivalLocations, name, description, startDate, endDate, organiser, tickets, RemainingTickets, minAge, maxAge, type,) {
 
         if (!
             (global.checkDate(startDate)
@@ -24,6 +24,9 @@ class Festival {
         this._organiser = organiser;
         this._tickets = tickets;
         this._remainingTickets = RemainingTickets;
+        this._minAge = minAge;
+        this._maxAge= maxAge;
+        this._type = type;
     }
 }
 
